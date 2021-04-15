@@ -6,11 +6,11 @@ using WebApp.Models;
 
 namespace WebApp.ContactData
 {
-    interface IContactRepo
+    public interface IContactRepo
     {
         List<Contact> GetContacts();
         Contact GetContact(int Id);
-        Contact GetContact(String name);
+        List<Contact> GetContact(String name);
         Contact AddContact(Contact contact);
         Contact UpdateContact(Contact contact);
 

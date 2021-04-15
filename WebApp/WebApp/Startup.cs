@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApp.ContactData;
 using WebApp.CustomerData;
 using WebApp.Models;
 
@@ -31,7 +32,11 @@ namespace WebApp
 
             services.AddScoped<ICustomer, DapperEntityCustomerData>();
 
+            services.AddScoped<IContactRepo, ContactDataRepo>();
+
             services.AddDbContextPool<CustomerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CustomerAppCon")));
+
+            services.AddDbContextPool<ContactContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CustomerAppCon")));
          
         }
 

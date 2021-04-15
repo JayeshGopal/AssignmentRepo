@@ -10,11 +10,11 @@ using WebApp.Models;
 
 namespace WebApp.ContactData
 {
-    public class ContactData : IContactRepo
+    public class ContactDataRepo : IContactRepo
     {
         private ContactContext _contactContext;
         private IDbConnection db;
-        public ContactData(ContactContext  contactContext, IConfiguration configuration)
+        public ContactDataRepo(ContactContext  contactContext, IConfiguration configuration)
         {
             _contactContext = contactContext;
             db = new SqlConnection(configuration.GetConnectionString("CustomerAppCon"));
@@ -32,10 +32,10 @@ namespace WebApp.ContactData
             return _contactContext.Contacts.Find(Id);
         }
 
-        public Contact GetContact(string name)
+        public List<Contact> GetContact(string name)
         {
-            String query = "SELECT FirstName,LastName,Email,PhoneNo,MobileNo FROM Contacts WHERE FirstName=@Name OR LastName=@Name";
-            return db.Query<Contact>(query, new { @Name = name }).SingleOrDefault();
+            String query = "SELECT FirstName,LastName,Email,PhoneNo,MobileNo FROM Contacts WHERE FirstName LIKE '%' + @Name + '%' OR LastName LIKE '%' + @Name + '%'";
+            return db.Query<Contact>(query, new { @Name = name }).ToList();
         }
 
         public List<Contact> GetContacts()
@@ -46,7 +46,7 @@ namespace WebApp.ContactData
         public Contact UpdateContact(Contact contact)
         {
             String query = "UPDATE Contacts SET FirstName=@FirstName,LastName=@LastName,Email=@Email,PhoneNo=@PhoneNo,MobileNo=@MobileNo"
-                + "WHERE ContactId=@ContactId";
+                + " WHERE ContactId=@ContactId";
             db.Execute(query, contact);
             return db.Query<Contact>("SELECT FirstName,LastName,Email,PhoneNo,MobileNo FROM Contacts WHERE ContactId=@ContactId",new { contact.ContactId}).SingleOrDefault();
         }
