@@ -28,9 +28,14 @@ namespace WebApp
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.IgnoreNullValues = true;
+            });
+
             services.AddControllers();
 
-            services.AddScoped<ICustomer, DapperEntityCustomerData>();
+            services.AddScoped<ICustomer, SqlCustomerData>();
 
             services.AddScoped<IContactRepo, ContactDataRepo>();
 

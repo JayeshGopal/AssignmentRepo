@@ -9,7 +9,7 @@ namespace WebApp.Models
     public class Contact
     {
         [Key]
-        public int ContactId { get; set; }
+        public int? ContactId { get; set; }
         
         [Required]
         [MaxLength(15)]
