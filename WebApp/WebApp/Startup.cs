@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApp.ContactData;
-using WebApp.CustomerData;
 using WebApp.Models;
 
 namespace WebApp
@@ -35,11 +34,7 @@ namespace WebApp
 
             services.AddControllers();
 
-            services.AddScoped<ICustomer, SqlCustomerData>();
-
             services.AddScoped<IContactRepo, ContactDataRepo>();
-
-            services.AddDbContextPool<CustomerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CustomerAppCon")));
 
             services.AddDbContextPool<ContactContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CustomerAppCon")));
          

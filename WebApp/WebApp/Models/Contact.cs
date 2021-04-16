@@ -19,9 +19,11 @@ namespace WebApp.Models
         public String LastName { get; set; }
 
         [MaxLength(20)]
+        [DataType(DataType.EmailAddress,ErrorMessage ="Invalid Email ID")]
         public String Email { get; set; }
 
         [MaxLength(10)]
+        [DataType(DataType.PhoneNumber,ErrorMessage ="Incorrect Mobile Number")]
         public String PhoneNo { get; set; }
 
         [Required]

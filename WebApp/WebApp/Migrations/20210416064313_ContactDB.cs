@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebApp.Migrations.Contact
+namespace WebApp.Migrations
 {
-    public partial class AddContactDB : Migration
+    public partial class ContactDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

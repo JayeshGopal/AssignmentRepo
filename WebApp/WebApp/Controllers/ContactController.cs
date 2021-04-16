@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebApp.ContactData;
 using WebApp.Models;
@@ -52,23 +53,40 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult AddContact([FromBody] Contact contact)
         {
+            String exp = @"^[7-9]\d{9}$";
+            if (Regex.IsMatch(contact.MobileNo, exp, RegexOptions.ECMAScript) == false) {
+                return BadRequest("Invalid Mobile Number");
+            }
+            if (contact.PhoneNo != null && Regex.IsMatch(contact.PhoneNo, exp, RegexOptions.ECMAScript) == false)
+            {
+                return BadRequest("Invalid Phone Number");
+            }
             var newContact = _repo.AddContact(contact);
             if (newContact != null) {
                 return Ok("Contact added successfully");
             }
-            return NotFound("Failed to add Contact");
+            return BadRequest("Failed to add Contact");
         }
 
         [HttpPut]
         [Route("{id}")]
         public IActionResult UpdateContact(int id,[FromBody] Contact contact)
         {
+            String exp = @"^[7-9]\d{9}$";
+            if (Regex.IsMatch(contact.MobileNo, exp, RegexOptions.ECMAScript) == false)
+            {
+                return BadRequest("Invalid Mobile Number");
+            }
+            if (contact.PhoneNo != null && Regex.IsMatch(contact.PhoneNo, exp, RegexOptions.ECMAScript) == false)
+            {
+                return BadRequest("Invalid Phone Number");
+            }
             var existContact = _repo.GetContact(id);
             if (existContact != null) {
                 contact.ContactId = existContact.ContactId;
                 return Ok(_repo.UpdateContact(contact));
             }
-            return NotFound("Failed To update contact");
+            return BadRequest("Failed To update contact");
         }
     }
 }

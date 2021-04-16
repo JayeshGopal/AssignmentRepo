@@ -8,8 +8,8 @@ using WebApp.Models;
 
 namespace WebApp.Migrations
 {
-    [DbContext(typeof(CustomerContext))]
-    partial class CustomerContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ContactContext))]
+    partial class ContactContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -19,16 +19,12 @@ namespace WebApp.Migrations
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebApp.Models.Customer", b =>
+            modelBuilder.Entity("WebApp.Models.Contact", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int?>("ContactId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContactNo")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(20)
@@ -40,13 +36,21 @@ namespace WebApp.Migrations
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("MobileNo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
-                    b.ToTable("Customers");
+                    b.Property<string>("PhoneNo")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.HasKey("ContactId");
+
+                    b.ToTable("Contacts");
                 });
 #pragma warning restore 612, 618
         }
